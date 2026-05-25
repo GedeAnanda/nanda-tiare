@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎀 Nanda 💗 Tiare — Happy 2 Years Anniversary Website
 
-## Getting Started
+Website anniversary yang dibuat Nanda khusus buat Tiare. Selamat anniversary ke-2, sayang! 💕
 
-First, run the development server:
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Cara Edit Konten
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Semua konten ada di **satu file**: `src/lib/content.ts`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Ganti Teks & Cerita
+Buka `src/lib/content.ts` dan edit:
+- **`config`** — tanggal jadian, tanggal anniversary
+- **`milestones`** — cerita di timeline (10 milestone)
+- **`letters`** — surat cinta (15 surat, ganti `body` dengan surat asli)
+- **`songs`** — playlist (6 lagu, ganti title & artist)
+- **`quizQuestions`** — quiz (10 pertanyaan, ganti soal & jawaban)
+- **`wishlistItems`** — bucket list (12 item)
+- **`voiceNotes`** — voice notes (6 items, tambah `audioSrc`)
+- **`galleryPhotos`** — foto gallery (12 foto, tambah `src`)
+- **`secretMessage`** — pesan rahasia di halaman secret
 
-## Learn More
+### Tambah Foto
+1. Taruh file foto di `/public/images/` (format: `photo-1.jpg`, `photo-2.jpg`, dll)
+2. Buka `src/lib/content.ts`, di bagian `galleryPhotos`, isi `src`:
+```ts
+{ id: 1, caption: "...", date: "...", gradient: "...", src: "/images/photo-1.jpg" },
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Tambah Audio / Voice Notes
+1. Taruh file audio di `/public/audio/` (format: `vn-1.mp3`, `vn-2.mp3`, dll)
+2. Buka `src/lib/content.ts`, di bagian `voiceNotes`, isi `audioSrc`:
+```ts
+{ id: 1, title: "...", audioSrc: "/audio/vn-1.mp3", ... },
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tambah Foto untuk Timeline
+1. Untuk menambah foto di milestone timeline, edit `src/app/timeline/page.tsx`
+2. Ganti placeholder div gradient dengan `<Image>` yang mengarah ke foto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏠 PWA (Add to Home Screen)
+Website ini sudah PWA-ready. Tiare bisa "Add to Home Screen" dari browser untuk buka langsung dari homescreen HP.
 
-## Deploy on Vercel
+Untuk custom icon:
+1. Buat icon 192x192 dan 512x512 pixel
+2. Taruh di `/public/icons/icon-192.png` dan `/public/icons/icon-512.png`
+3. (Opsional) Tambah apple-touch-icon di `/public/icons/apple-touch-icon.png`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌐 Deploy ke Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Cara 1: Via GitHub
+1. Push project ke GitHub repository
+2. Buka [vercel.com](https://vercel.com)
+3. Import repository
+4. Click "Deploy" — selesai!
+
+### Cara 2: Via CLI
+```bash
+npm i -g vercel
+vercel
+```
+
+## 🗂️ Struktur Project
+
+```
+src/
+├── app/                    # Pages (Next.js App Router)
+│   ├── page.tsx           # Landing / Hero + Countdown
+│   ├── timeline/          # Cerita 2 tahun
+│   ├── gallery/           # Galeri foto (Polaroid + Filmstrip)
+│   ├── letters/           # 15 surat cinta + envelope animation
+│   ├── playlist/          # Playlist lagu-lagu kita
+│   ├── games/             # Mini games (Catch Hearts + Quiz)
+│   ├── wishlist/          # Bucket list bareng
+│   ├── voice/             # Voice notes collection
+│   └── secret/            # Hidden page (easter egg!)
+├── components/
+│   ├── layout/            # TopBar, BottomNav, Loader, ClientLayout
+│   └── ui/                # FloatingElements, ConfettiBurst
+├── lib/
+│   ├── content.ts         # 🎯 SEMUA KONTEN EDIT DI SINI
+│   ├── hooks.ts           # Custom React hooks
+│   └── utils.ts           # Utility functions
+└── public/
+    ├── images/            # Foto-foto (tambah di sini)
+    ├── audio/             # Voice notes & audio (tambah di sini)
+    ├── icons/             # PWA icons
+    └── manifest.json      # PWA config
+```
+
+## 🥚 Easter Eggs
+- **Triple-tap** judul "Happy 2 Years, Sayang" → buka halaman rahasia
+- **Ketik "tiare"** di keyboard (desktop) → buka halaman rahasia  
+- **Hati tersembunyi** di halaman Gallery → buka halaman rahasia
+- **Vault** di halaman Secret → terbuka otomatis tanggal 29 Mei 2026
+
+## 💡 Fitur
+- ⏰ Live countdown ke 29 Mei 2026 (auto switch ke count-up setelah anniv)
+- 💌 15 surat cinta dengan envelope animation & typewriter effect
+- 📸 Gallery dual-mode (Polaroid + Filmstrip) dengan 3D flip
+- 🎮 2 mini games: Catch Hearts & Quiz "Seberapa Kenal?"
+- 📝 Interactive bucket list dengan progress tracking
+- 🎵 Playlist cards dengan music note animations
+- 🎤 Voice notes dengan waveform animation
+- 🤫 Halaman rahasia dengan vault yang unlock di hari anniv
+- ✨ Confetti, sparkles, floating emojis, haptic feedback
+- 📱 Mobile-first design, PWA-ready
+- 💾 LocalStorage untuk save progress (game scores, opened letters, wishlist)
+
+---
+
+Dibuat dengan 💗 oleh Nanda untuk Tiare

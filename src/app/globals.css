@@ -2,26 +2,312 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   🎀 Design System — Pastel Dream
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #FFF8F0;
+  --blush: #FFD6E0;
+  --peach: #FFB4A2;
+  --rose: #FF8FA3;
+  --lavender: #E0BBE4;
+  --mint: #B5EAD7;
+  --butter: #FFF3B0;
+  --sky: #C7F0FF;
+  --deep-rose: #D4527A;
+  --ink: #4A3B47;
+  --soft-shadow: rgba(255, 143, 163, 0.15);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-quicksand), sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  min-height: 100dvh;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Safe area padding for iPhones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
   }
+}
+
+/* ============================================================
+   Grain Texture Overlay 
+   ============================================================ */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Gradient Backgrounds
+   ============================================================ */
+.bg-pastel-gradient {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 40%, var(--lavender) 100%);
+}
+
+.bg-pastel-gradient-2 {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--sky) 50%, var(--mint) 100%);
+}
+
+.bg-pastel-gradient-3 {
+  background: linear-gradient(135deg, var(--butter) 0%, var(--peach) 50%, var(--rose) 100%);
+}
+
+/* ============================================================
+   Sticker Card Style
+   ============================================================ */
+.sticker-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px var(--soft-shadow);
+  border: 2px solid rgba(255, 214, 224, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sticker-card:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   Squiggly Underline
+   ============================================================ */
+.squiggly-underline {
+  text-decoration: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0 4 Q12.5 0 25 4 Q37.5 8 50 4 Q62.5 0 75 4 Q87.5 8 100 4' fill='none' stroke='%23FF8FA3' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-size: 50px 8px;
+  padding-bottom: 6px;
+}
+
+/* ============================================================
+   Wobbly Border
+   ============================================================ */
+.wobbly-border {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+/* ============================================================
+   Washi Tape decoration 
+   ============================================================ */
+.washi-tape {
+  position: relative;
+}
+.washi-tape::before,
+.washi-tape::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  background: var(--butter);
+  opacity: 0.7;
+  z-index: 10;
+}
+.washi-tape::before {
+  top: -10px;
+  left: 15px;
+  transform: rotate(-8deg);
+}
+.washi-tape::after {
+  top: -10px;
+  right: 15px;
+  transform: rotate(5deg);
+}
+
+/* ============================================================
+   Dotted Timeline Line
+   ============================================================ */
+.timeline-line {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--rose) 0px,
+    var(--rose) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  width: 3px;
+}
+
+/* ============================================================
+   Envelope CSS
+   ============================================================ */
+.envelope-body {
+  background: linear-gradient(135deg, var(--blush) 0%, #ffe0e6 100%);
+  border-radius: 0 0 1.5rem 1.5rem;
+  position: relative;
+}
+
+.envelope-flap {
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 100px solid var(--peach);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  transition: transform 0.6s ease;
+  z-index: 2;
+}
+
+.envelope-flap.open {
+  transform: translateX(-50%) rotateX(180deg);
+}
+
+/* ============================================================
+   Paper texture for letters
+   ============================================================ */
+.paper-texture {
+  background: #fffef9;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 100% 28px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ============================================================
+   Notepad background for wishlist
+   ============================================================ */
+.notepad-bg {
+  background: #fffef9;
+  background-image: 
+    linear-gradient(rgba(255, 143, 163, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 60px, rgba(255, 143, 163, 0.15) 60px, rgba(255, 143, 163, 0.15) 62px, transparent 62px);
+  background-size: 100% 32px, 100% 100%;
+  border-radius: 1.5rem;
+}
+
+/* ============================================================
+   Film strip  
+   ============================================================ */
+.film-strip {
+  background: #1a1a1a;
+  border-radius: 0.5rem;
+  padding: 8px;
+  position: relative;
+}
+
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 4px,
+    #333 4px,
+    #333 12px,
+    transparent 12px,
+    transparent 16px
+  );
+}
+
+.film-strip::before { left: 0; }
+.film-strip::after { right: 0; }
+
+/* ============================================================
+   Custom Scrollbar
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--blush);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--rose);
+}
+
+/* ============================================================
+   Wavy Strikethrough for completed wishlist items
+   ============================================================ */
+.wavy-strike {
+  text-decoration: line-through;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--rose);
+  text-decoration-thickness: 2px;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   Chat bubble for voice notes
+   ============================================================ */
+.chat-bubble {
+  position: relative;
+  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+}
+.chat-bubble-right {
+  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+}
+
+/* ============================================================
+   Typewriter cursor
+   ============================================================ */
+.typewriter-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--deep-rose);
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ============================================================
+   Bottom Nav Safe Area
+   ============================================================ */
+.bottom-nav-spacer {
+  height: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ============================================================
+   Selection color
+   ============================================================ */
+::selection {
+  background: var(--blush);
+  color: var(--ink);
+}
+
+/* ============================================================
+   Page transition wrapper
+   ============================================================ */
+.page-wrapper {
+  min-height: 100dvh;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
 }
