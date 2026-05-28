@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import { milestones } from "@/lib/content";
 
 function TimelineCard({
@@ -103,12 +104,21 @@ function CardContent({
         {milestone.story}
       </p>
 
-      {/* Photo placeholder */}
+      {/* Photo placeholder or image */}
       <div className="washi-tape relative">
-        <div className="w-full h-40 sm:h-48 rounded-2xl bg-gradient-to-br from-blush/30 to-lavender/30 flex items-center justify-center">
-          <span className="font-body text-sm text-ink/30">
-            Foto akan di sini 📸
-          </span>
+        <div className="w-full h-40 sm:h-48 rounded-2xl bg-gradient-to-br from-blush/30 to-lavender/30 flex items-center justify-center relative overflow-hidden">
+          {milestone.src ? (
+            <Image
+              src={milestone.src}
+              alt={milestone.title}
+              fill
+              className="object-cover rounded-2xl"
+            />
+          ) : (
+            <span className="font-body text-sm text-ink/30">
+              Foto akan di sini 📸
+            </span>
+          )}
         </div>
       </div>
     </motion.div>

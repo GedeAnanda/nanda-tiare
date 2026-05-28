@@ -111,7 +111,7 @@ export default function GalleryPage() {
                         style={{ backfaceVisibility: "hidden" }}
                       >
                         <div
-                          className={`w-full aspect-square rounded-md bg-gradient-to-br ${photo.gradient} flex items-center justify-center`}
+                          className={`relative w-full aspect-square rounded-md bg-gradient-to-br ${photo.gradient} flex items-center justify-center`}
                         >
                           {photo.src ? (
                             <Image
@@ -195,7 +195,7 @@ export default function GalleryPage() {
                   >
                     <div className="film-strip">
                       <div
-                        className={`w-48 h-64 sm:w-56 sm:h-72 rounded bg-gradient-to-br ${photo.gradient} flex items-center justify-center mx-6`}
+                        className={`relative w-48 h-64 sm:w-56 sm:h-72 rounded bg-gradient-to-br ${photo.gradient} flex items-center justify-center mx-6`}
                       >
                         {photo.src ? (
                           <Image
@@ -244,7 +244,7 @@ export default function GalleryPage() {
               onClick={(e) => e.stopPropagation()}
             >
               <div
-                className={`w-full aspect-square rounded-lg bg-gradient-to-br ${selectedPhoto.gradient} flex items-center justify-center`}
+                className={`relative w-full aspect-square rounded-lg bg-gradient-to-br ${selectedPhoto.gradient} flex items-center justify-center`}
               >
                 {selectedPhoto.src ? (
                   <Image
