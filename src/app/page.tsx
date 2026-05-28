@@ -75,7 +75,17 @@ export default function HomePage() {
     { label: "Detik", value: padZero(countdown.seconds) },
   ];
 
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    const unlockedStatus = localStorage.getItem("bandung-unlocked");
+    if (unlockedStatus === "true") {
+      setIsUnlocked(true);
+    }
+  }, []);
+
   const rotations = [-3, 2, -2, 3];
+  const lockedRoutes = ["/letters", "/wishlist", "/voice"];
 
   return (
     <div className="relative">
@@ -254,35 +264,43 @@ export default function HomePage() {
                 Website ini isinya... ✨
               </p>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {featureCards.map((card, i) => (
-                  <motion.div
-                    key={card.href}
-                    initial={{ opacity: 0, scale: 0, rotate: -5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: i % 2 === 0 ? -2 : 2 }}
-                    transition={{
-                      delay: 0.8 + i * 0.1,
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 15,
-                    }}
-                  >
-                    <Link href={card.href}>
-                      <motion.div
-                        whileHover={{ scale: 1.05, rotate: 0 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`sticker-card p-4 sm:p-5 flex flex-col items-center text-center gap-2 ${card.color}`}
-                      >
-                        <span className="text-3xl">{card.emoji}</span>
-                        <h3 className="font-accent text-sm font-bold text-ink">
-                          {card.title}
-                        </h3>
-                        <p className="font-body text-[11px] text-ink/50">
-                          {card.desc}
-                        </p>
-                      </motion.div>
-                    </Link>
-                  </motion.div>
-                ))}
+                {featureCards.map((card, i) => {
+                  const isLocked = !isUnlocked && lockedRoutes.includes(card.href);
+                  return (
+                    <motion.div
+                      key={card.href}
+                      initial={{ opacity: 0, scale: 0, rotate: -5 }}
+                      animate={{ opacity: 1, scale: 1, rotate: i % 2 === 0 ? -2 : 2 }}
+                      transition={{
+                        delay: 0.8 + i * 0.1,
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 15,
+                      }}
+                    >
+                      <Link href={card.href}>
+                        <motion.div
+                          whileHover={{ scale: 1.05, rotate: 0 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`sticker-card p-4 sm:p-5 flex flex-col items-center text-center gap-2 relative overflow-hidden ${card.color}`}
+                        >
+                          {isLocked && (
+                            <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-md w-6 h-6 rounded-full flex items-center justify-center shadow-soft border border-blush/30">
+                              <span className="text-[10px]">🔒</span>
+                            </div>
+                          )}
+                          <span className="text-3xl">{card.emoji}</span>
+                          <h3 className="font-accent text-sm font-bold text-ink">
+                            {card.title}
+                          </h3>
+                          <p className="font-body text-[11px] text-ink/50">
+                            {isLocked ? "Terkunci (Buka di Bandung) 📍" : card.desc}
+                          </p>
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               <motion.p

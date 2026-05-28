@@ -304,8 +304,8 @@ function CatchHeartsGame({ onBack }: { onBack: () => void }) {
           >
             <motion.span
               initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.3, 1] }}
-              transition={{ type: "spring", stiffness: 300 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
               className="text-6xl inline-block mb-4"
             >
               🏆
@@ -516,8 +516,8 @@ function QuizGame({ onBack }: { onBack: () => void }) {
           >
             <motion.span
               initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.3, 1] }}
-              transition={{ type: "spring", stiffness: 300 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
               className="text-6xl inline-block mb-4"
             >
               {getResultMessage().emoji}

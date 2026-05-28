@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Home, Clock, Camera, Mail, Gamepad2, Music, Mic, Heart, MoreHorizontal } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const mainNavItems = [
   { href: "/", icon: Home, label: "Home", emoji: "🏠" },
@@ -23,6 +23,16 @@ const moreNavItems = [
 export default function BottomNav() {
   const pathname = usePathname();
   const [showMore, setShowMore] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    const unlocked = localStorage.getItem("bandung-unlocked") === "true";
+    setIsUnlocked(unlocked);
+  }, []);
+
+  const isLockedFeature = (href: string) => {
+    return !isUnlocked && ["/letters", "/wishlist", "/voice"].includes(href);
+  };
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -51,21 +61,27 @@ export default function BottomNav() {
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
           className="fixed bottom-24 right-4 z-50 bg-white rounded-3xl shadow-soft-xl p-3 flex flex-col gap-1 min-w-[160px] border border-blush/30"
         >
-          {moreNavItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setShowMore(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors ${
-                isActive(item.href)
-                  ? "bg-blush/40 text-deep-rose"
-                  : "hover:bg-blush/20 text-ink/70"
-              }`}
-            >
-              <span className="text-lg">{item.emoji}</span>
-              <span className="text-sm font-body font-semibold">{item.label}</span>
-            </Link>
-          ))}
+          {moreNavItems.map((item) => {
+            const locked = isLockedFeature(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setShowMore(false)}
+                className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
+                  isActive(item.href)
+                    ? "bg-blush/40 text-deep-rose"
+                    : "hover:bg-blush/20 text-ink/70"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-lg">{item.emoji}</span>
+                  <span className="text-sm font-body font-semibold">{item.label}</span>
+                </div>
+                {locked && <span className="text-xs text-ink/40">🔒</span>}
+              </Link>
+            );
+          })}
         </motion.div>
       )}
 
@@ -80,6 +96,7 @@ export default function BottomNav() {
              style={{ paddingBottom: `calc(0.5rem + env(safe-area-inset-bottom, 0px))` }}>
           {mainNavItems.map((item) => {
             const active = isActive(item.href);
+            const locked = isLockedFeature(item.href);
             return (
               <Link
                 key={item.href}
@@ -99,7 +116,12 @@ export default function BottomNav() {
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10 text-lg">{item.emoji}</span>
+                  <span className="relative z-10 text-lg">
+                    {item.emoji}
+                    {locked && (
+                      <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-white/90 rounded-full w-3.5 h-3.5 flex items-center justify-center border border-blush/30 shadow-soft">🔒</span>
+                    )}
+                  </span>
                   {active && (
                     <motion.span
                       initial={{ scale: 0 }}

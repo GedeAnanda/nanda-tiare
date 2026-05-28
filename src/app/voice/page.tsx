@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { voiceNotes, config } from "@/lib/content";
 import { useHaptic } from "@/lib/hooks";
+import LocationLock from "@/components/layout/LocationLock";
 
 function WaveformBars({ playing }: { playing: boolean }) {
   const bars = 20;
@@ -50,7 +51,8 @@ export default function VoicePage() {
   };
 
   return (
-    <div className="min-h-screen bg-pastel-gradient px-4 py-8 sm:py-12">
+    <LocationLock>
+      <div className="min-h-screen bg-pastel-gradient px-4 py-8 sm:py-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -188,6 +190,7 @@ export default function VoicePage() {
           Audio files bisa ditambahin nanti ya 🎧
         </motion.p>
       </div>
-    </div>
+      </div>
+    </LocationLock>
   );
 }

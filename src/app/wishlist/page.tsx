@@ -5,6 +5,7 @@ import { useState, useCallback } from "react";
 import { wishlistItems as defaultItems, type WishlistItem, type WishlistCategory } from "@/lib/content";
 import { useLocalStorage, useHaptic } from "@/lib/hooks";
 import ConfettiBurst from "@/components/ui/ConfettiBurst";
+import LocationLock from "@/components/layout/LocationLock";
 
 const categories: WishlistCategory[] = ["Travel", "Food", "Experience", "Date", "Random"];
 const categoryEmojis: Record<WishlistCategory, string> = {
@@ -61,8 +62,9 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cream px-4 py-8 sm:py-12">
-      <ConfettiBurst trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
+    <LocationLock>
+      <div className="min-h-screen bg-cream px-4 py-8 sm:py-12">
+        <ConfettiBurst trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Header */}
       <motion.div
@@ -268,5 +270,6 @@ export default function WishlistPage() {
         )}
       </AnimatePresence>
     </div>
+    </LocationLock>
   );
 }

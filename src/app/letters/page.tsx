@@ -6,6 +6,7 @@ import { letters } from "@/lib/content";
 import { getDailyLetterIndex } from "@/lib/utils";
 import { useLocalStorage, useHaptic } from "@/lib/hooks";
 import ConfettiBurst from "@/components/ui/ConfettiBurst";
+import LocationLock from "@/components/layout/LocationLock";
 
 export default function LettersPage() {
   const [openedLetters, setOpenedLetters] = useLocalStorage<number[]>("opened-letters", []);
@@ -62,8 +63,9 @@ export default function LettersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-pastel-gradient px-4 py-8 sm:py-12">
-      <ConfettiBurst trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
+    <LocationLock>
+      <div className="min-h-screen bg-pastel-gradient px-4 py-8 sm:py-12">
+        <ConfettiBurst trigger={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Header */}
       <motion.div
@@ -277,5 +279,6 @@ export default function LettersPage() {
         </div>
       </motion.div>
     </div>
+    </LocationLock>
   );
 }

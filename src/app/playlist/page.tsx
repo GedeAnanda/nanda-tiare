@@ -1,17 +1,61 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { songs } from "@/lib/content";
 import { useHaptic } from "@/lib/hooks";
 
 export default function PlaylistPage() {
   const [playingId, setPlayingId] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const haptic = useHaptic();
 
-  const togglePlay = (id: number) => {
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const togglePlay = (id: number, audioSrc?: string) => {
     haptic(30);
-    setPlayingId(playingId === id ? null : id);
+    if (playingId === id) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setPlayingId(null);
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+
+      if (!audioSrc) {
+        alert("File audio belum ditentukan untuk lagu ini!");
+        return;
+      }
+
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+
+      audio.onended = () => {
+        setPlayingId(null);
+      };
+
+      audio.play()
+        .then(() => {
+          setPlayingId(id);
+        })
+        .catch((err) => {
+          console.error("Failed to play audio:", err);
+          // Show visual playing state anyway for demonstration
+          setPlayingId(id);
+          alert(
+            `File audio tidak ditemukan di: ${audioSrc}\n\nSilakan masukkan file .mp3 kamu ke folder: /public${audioSrc} ya! 😉`
+          );
+        });
+    }
   };
 
   return (
@@ -123,7 +167,7 @@ export default function PlaylistPage() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => togglePlay(song.id)}
+                  onClick={() => togglePlay(song.id, song.audioSrc)}
                   className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-soft ${
                     isPlaying ? "bg-deep-rose text-white" : "bg-blush/50 text-deep-rose"
                   }`}
