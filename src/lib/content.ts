@@ -23,7 +23,7 @@ export const milestones = [
     story:
       "Hari dimana semuanya dimulai. Tiare sayang, ini cerita kita dari hari pertama...",
     emoji: "💖",
-    src: "/images/jadian.jpg", // TODO: Nanda tambahkan foto di /public/images/timeline-1.jpg (misal: "/images/timeline-1.jpg")
+    src: "/images/jadian.JPG", // TODO: Nanda tambahkan foto di /public/images/timeline-1.jpg (misal: "/images/timeline-1.jpg")
   },
   {
     id: 2,
@@ -50,7 +50,7 @@ export const milestones = [
     story:
       "pertama kali keluar pulau bali bareng, dan ini lagi di kapal otw jogja pertama kali sama kamu",
     emoji: "🎂",
-    src: "/images/kapal.jpg",
+    src: "/images/kapal.JPG",
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ export const milestones = [
     story:
       "Disini kamu pertama kali ketemu orang tua aku dan tepat juga dihari ulang tahun aku haha ketemu bapak ibuk sama kiki",
     emoji: "🤪",
-    src: "/images/pertamaketemuortu.jpg",
+    src: "/images/pertamaketemuortu.JPG",
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ export const milestones = [
     story:
       "Disini kita pertunjukan bareng kamu jadi dancer, aku jadi tukang gebug seru banget dan latihan juga bareng terus",
     emoji: "🥁",
-    src: "/images/gebug.jpg",
+    src: "/images/gebug.JPG",
   },
   {
     id: 9,
@@ -122,7 +122,7 @@ export const milestones = [
     story:
       "Yah tiba tiba lulus udah gabisa bareng bareng 24/7, karena kita harus sama sama merantau dan beda tempat",
     emoji: "🎓",
-    src: "/images/lulusan.jpg",
+    src: "/images/lulusan.JPG",
   },
   {
     id: 13,
@@ -140,7 +140,7 @@ export const milestones = [
     story:
       "Karena kamu lanjut sekolah di jogja, jadi aku nyusul hahaha dan sekalian eksplore jogja sama kamu yahahayuk",
     emoji: "🏙️",
-    src: "/images/malioboro.jpg",
+    src: "/images/malioboro.JPG",
   },
   {
     id: 15, 
@@ -149,7 +149,7 @@ export const milestones = [
     story:
       "NAH INI PALING SERING JAKARTA TERUS JAKARTA TERUS",
     emoji: "✈️",
-    src: "/images/jakarta.jpg",
+    src: "/images/jakarta.JPG",
   },
 ];
 
